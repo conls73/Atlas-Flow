@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flow Atlas | Modern AI & Automation for Realtors</title>
+    <meta name="description" content="Flow Atlas provides cutting-edge automations designed to scale your real estate business. From Zillow Lead Response to Review Automation.">
+    
+    <!-- Premium Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Dynamic Background Elements -->
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <img src="logo.svg" alt="Flow Atlas Logo" class="logo-img">
+                <span class="logo-text">FLOW ATLAS</span>
+            </a>
+            <div class="nav-links">
+                <a href="#services">Automations</a>
+                <a href="#apps">Apps</a>
+                <button class="btn-primary btn-small join-waitlist-btn">Join the Waitlist</button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero reveal">
+            <div class="hero-content">
+                <div class="badge">🚀 The Future of Real Estate Automation</div>
+                <h1 class="hero-title">Automate your leads.<br>Never miss a <span class="text-gradient">sale</span> again.</h1>
+                <p class="hero-subtitle">We build intelligent real estate automation systems that handle buyer leads, showing bookings, and closing reviews instantly—so you can focus on selling properties.</p>
+                <div class="hero-cta">
+                    <a href="#services" class="btn-primary">View Automations</a>
+                    <a href="#apps" class="btn-secondary pulse">Coming Soon Apps</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Automations Section -->
+        <section id="services" class="section">
+            <div class="section-header reveal">
+                <h2 class="section-title">Core Automations</h2>
+                <p class="section-desc">Three foundational systems crafted explicitly to stop leaks and maximize conversions.</p>
+            </div>
+
+            <div class="grid services-grid">
+                <!-- Automation 1 -->
+                <div class="card glass reveal clickable-card join-waitlist-btn">
+                    <div class="card-icon">⚡️</div>
+                    <h3 class="card-title">Instant Lead Response System</h3>
+                    <p class="card-text">Captures leads instantly from Facebook, Zillow, or Web Forms. Triggers an immediate SMS & Email response and automatically logs the client into your CRM.</p>
+                </div>
+                
+                <!-- Automation 2 -->
+                <div class="card glass reveal clickable-card join-waitlist-btn" style="transition-delay: 100ms;">
+                    <div class="card-icon">🗓️</div>
+                    <h3 class="card-title">Automated Appointment Booking</h3>
+                    <p class="card-text">Streamlines showings. Send out calendar links upon request, followed by automated multi-channel (SMS + Email) reminders for both the client and the agent.</p>
+                </div>
+
+                <!-- Automation 3 -->
+                <div class="card glass reveal clickable-card join-waitlist-btn" style="transition-delay: 200ms;">
+                    <div class="card-icon">⭐</div>
+                    <h3 class="card-title">Review & Referral Engine</h3>
+                    <p class="card-text">Triggered when a deal closes. Automatically sends an SMS asking for a Google/Zillow review. Follows up twice, and automatically asks for referrals once a review is left!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Separator -->
+        <div class="divider"></div>
+
+        <!-- Apps Section -->
+        <section id="apps" class="section">
+            <div class="section-header reveal">
+                <h2 class="section-title">Exclusive Realtor Apps</h2>
+                <p class="section-desc">Powerful internal tools we're opening up to the public. Join the waitlist.</p>
+            </div>
+
+            <div class="grid saas-grid">
+                <!-- App 1 -->
+                <div class="card glass saas-card reveal clickable-card join-waitlist-btn">
+                    <div class="coming-soon-badge">Coming Soon</div>
+                    <div class="card-icon">🔗</div>
+                    <h3 class="card-title">Agent Link</h3>
+                    <p class="card-text">The ultimate "Link in Bio" specifically designed for realtors. Beautifully highlight properties and links.<br><br><strong>$5 / month</strong></p>
+                </div>
+                
+                <!-- App 2 -->
+                <div class="card glass saas-card reveal clickable-card join-waitlist-btn" style="transition-delay: 100ms;">
+                    <div class="coming-soon-badge">Coming Soon</div>
+                    <div class="card-icon">📣</div>
+                    <h3 class="card-title">Property Blast</h3>
+                    <p class="card-text">Tired of manual social publishing? Automatically generate and post beautiful Facebook and Instagram updates for every new listing.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="logo">
+                <img src="logo.svg" alt="Flow Atlas" class="logo-img">
+                <span class="logo-text">FLOW ATLAS</span>
+            </div>
+            <p class="footer-msg">Designing the future of automation.</p>
+            <p class="footer-copy">&copy; 2026 Flow Atlas. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Waitlist Modal -->
+    <div id="waitlist-modal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content glass">
+            <button class="modal-close">&times;</button>
+            <h3 class="card-title">Join the Waitlist</h3>
+            <p class="card-text" style="margin-bottom: 2rem;">Be the first to access our exclusive real estate automation systems and apps.</p>
+            <form class="notify-form modal-form">
+                <input type="email" placeholder="Enter your best email" required class="input-field">
+                <button type="submit" class="btn-primary">Secure My Spot</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
