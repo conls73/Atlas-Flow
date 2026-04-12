@@ -1,0 +1,75 @@
+import React from 'react';
+import { Link2 } from 'lucide-react';
+
+export default function Home() {
+  return (
+    <main className="min-h-screen bg-[#0052FF] text-white selection:bg-white selection:text-[#0052FF] font-sans overflow-hidden hidden-scrollbar">
+      
+      {/* Navbar */}
+      <nav className="flex items-center justify-between px-6 py-6 max-w-[1400px] mx-auto w-full">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#0052FF] shadow-md">
+            <Link2 className="w-5 h-5 stroke-[3]" />
+          </div>
+          <span className="font-extrabold text-2xl tracking-tight text-white drop-shadow-sm">AgentLink</span>
+        </div>
+        <div className="flex items-center gap-6">
+          <a href="#" className="font-semibold text-lg text-white hover:text-blue-200 transition-colors hidden sm:block">Log in</a>
+          <a href="#" className="font-bold bg-white text-[#0052FF] px-6 py-3 rounded-full hover:bg-blue-50 transition-colors shadow-lg">Sign up free</a>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <div className="max-w-[1400px] mx-auto px-6 pt-12 pb-32 flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-8 min-h-[85vh]">
+        
+        {/* Left Side: Copy & CTA */}
+        <div className="flex-1 lg:max-w-2xl w-full flex flex-col justify-center animate-in fade-in slide-in-from-bottom-8 duration-700">
+          <h1 className="text-6xl sm:text-[5.5rem] lg:text-[6.5rem] font-black tracking-tighter text-white mb-8 leading-[0.95]">
+            Everything you sell. In one link.
+          </h1>
+          <p className="text-xl sm:text-2xl text-blue-100/90 mb-12 font-medium max-w-xl leading-relaxed">
+            Join the top 1% of producers. One intelligent link to showcase your listings, capture buyer leads, and grow your real estate brand.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 w-full max-w-xl">
+            <div className="flex items-center bg-white rounded-lg px-5 py-4 flex-1 shadow-inner focus-within:ring-4 focus-within:ring-white/50 transition-all">
+              <span className="text-stone-400 font-bold text-lg">agentlink.com/</span>
+              <input 
+                type="text" 
+                placeholder="yourname" 
+                className="w-full text-stone-900 font-bold focus:outline-none text-lg ml-1 bg-transparent placeholder:font-medium placeholder:text-stone-300"
+              />
+            </div>
+            <button className="bg-white hover:bg-blue-50 text-[#0052FF] font-extrabold px-10 py-4 rounded-lg transition-colors text-lg whitespace-nowrap shadow-xl">
+              Claim your Link
+            </button>
+          </div>
+          
+          <p className="mt-8 text-blue-200/80 font-medium tracking-wide">It’s free, and takes less than a minute.</p>
+        </div>
+
+        {/* Right Side: Demo Mockup */}
+        <div className="flex-1 w-full flex justify-center lg:justify-end animate-in fade-in slide-in-from-right-8 duration-1000">
+          <div className="relative w-[360px] h-[760px] bg-[#0A0B0D] rounded-[3.5rem] p-3.5 shadow-2xl shadow-black/40 border-4 border-[#0A0B0D]/80 rotate-2 hover:rotate-0 transition-transform duration-500">
+            {/* Phone Hardware Details */}
+            <div className="absolute top-0 inset-x-0 h-8 bg-transparent z-20 flex justify-center pt-3.5">
+              <div className="w-1/3 h-6 bg-[#0A0B0D] rounded-full flex items-center justify-end px-2 pb-0.5">
+                 <div className="w-2.5 h-2.5 rounded-full bg-stone-800 shadow-inner"></div>
+              </div> 
+            </div>
+            {/* Screen Content via Iframe to the demo we built! */}
+            <div className="w-full h-full bg-stone-50 rounded-[2.75rem] overflow-hidden relative shadow-inner">
+              <iframe 
+                src="/alexjensen" 
+                title="Agent Link Demo Profile"
+                className="w-full h-[calc(100%+2rem)] border-0 absolute inset-0 -top-4 rounded-[2.75rem] bg-stone-50"
+                style={{ width: '100%' }}
+              />
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  );
+}
