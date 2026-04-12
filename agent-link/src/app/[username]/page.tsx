@@ -201,7 +201,7 @@ export default function AgentProfile({ params }: ProfileProps) {
 
         {/* Footer */}
         <footer className="mt-12 text-center">
-          <a href="#" className="text-xs font-semibold text-stone-400 hover:text-stone-600 transition-colors">
+          <a href="/" className="text-xs font-semibold text-stone-400 hover:text-stone-600 transition-colors">
             Powered by AgentLink
           </a>
         </footer>
