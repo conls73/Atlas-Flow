@@ -1,7 +1,12 @@
-import React from 'react';
+"use client";
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Link2 } from 'lucide-react';
 
 export default function Home() {
+  const [username, setUsername] = useState("");
+  const router = useRouter();
+
   return (
     <main className="min-h-screen bg-[#0052FF] text-white selection:bg-white selection:text-[#0052FF] font-sans overflow-hidden hidden-scrollbar relative flex flex-col">
       
@@ -31,19 +36,27 @@ export default function Home() {
             Join the top 1% of producers. One intelligent link to showcase your listings, capture buyer leads, and grow your real estate brand.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 w-full max-w-xl">
+          <form 
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (username) router.push(`/builder?username=${username}`);
+            }} 
+            className="flex flex-col sm:flex-row gap-4 w-full max-w-xl"
+          >
             <div className="flex items-center bg-white rounded-lg px-5 py-4 flex-1 shadow-inner focus-within:ring-4 focus-within:ring-white/50 transition-all">
               <span className="text-stone-400 font-bold text-lg">agentlink.com/</span>
               <input 
                 type="text" 
-                placeholder="yourname" 
+                placeholder="yourname"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 className="w-full text-stone-900 font-bold focus:outline-none text-lg ml-1 bg-transparent placeholder:font-medium placeholder:text-stone-300"
               />
             </div>
-            <button className="bg-white hover:bg-blue-50 text-[#0052FF] font-extrabold px-10 py-4 rounded-lg transition-colors text-lg whitespace-nowrap shadow-xl">
+            <button type="submit" className="bg-white hover:bg-blue-50 text-[#0052FF] font-extrabold px-10 py-4 rounded-lg transition-colors text-lg whitespace-nowrap shadow-xl">
               Claim your Link
             </button>
-          </div>
+          </form>
           
           <div className="mt-8 flex flex-wrap items-center gap-6">
             <p className="text-blue-200/80 font-medium tracking-wide">It’s free, and takes less than a minute.</p>
