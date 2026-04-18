@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useState, Suspense } from 'react';
+import React, { useRef, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { ProfilePreview } from '../../../src/components/ProfilePreview';
 import { Plus, Trash2, Link2, MonitorSmartphone, GripVertical } from 'lucide-react';
@@ -11,7 +11,8 @@ import { CSS } from '@dnd-kit/utilities';
 
 function SortableLinkItem({ link, updateLink, removeLink }: { link: any, updateLink: any, removeLink: any }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: link.id });
-  
+  const thumbnailInputId = `thumbnail-upload-${link.id}`;
+
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
@@ -22,38 +23,88 @@ function SortableLinkItem({ link, updateLink, removeLink }: { link: any, updateL
   const isActive = link.isActive !== false;
 
   return (
-    <div 
-      ref={setNodeRef} 
-      style={style} 
-      className={`bg-stone-50 p-5 rounded-2xl border ${isDragging ? 'border-[#0052FF] shadow-xl scale-[1.02]' : 'border-stone-200'} transition-shadow flex gap-4 group relative ${!isActive ? 'opacity-60 saturate-50' : ''}`}
+    <div
+      ref={setNodeRef}
+      style={style}
+      className={`bg-stone-50 p-4 rounded-2xl border ${isDragging ? 'border-[#0052FF] shadow-xl scale-[1.02]' : 'border-stone-200'} transition-shadow flex gap-3 group relative ${!isActive ? 'opacity-60 saturate-50' : ''}`}
     >
-      {/* Drag Handle */}
       <div {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing text-stone-300 hover:text-stone-500 transition-colors flex items-center">
         <GripVertical className="w-6 h-6" />
       </div>
-      
-      <div className="flex-1 flex flex-col gap-3 min-w-0 pr-10">
-        <div className="absolute top-5 right-14">
-          {/* Toggle Switch */}
-          <button 
-            onClick={() => updateLink(link.id, 'isActive', !isActive)}
-            className={`w-10 h-6 rounded-full transition-colors flex items-center px-1 ${isActive ? 'bg-[#0052FF]' : 'bg-stone-300'}`}
-          >
-            <div className={`w-4 h-4 bg-white rounded-full transition-transform ${isActive ? 'translate-x-4' : 'translate-x-0'}`} />
-          </button>
+
+      <div className="flex-1 flex gap-4 min-w-0 pr-10">
+        <div className="flex flex-col items-center justify-center pt-6">
+          <div className="relative h-[104px] w-[104px]">
+            <label
+              htmlFor={thumbnailInputId}
+              className="relative flex h-[104px] w-[104px] cursor-pointer items-center justify-center overflow-hidden rounded-2xl border border-dashed border-stone-300 bg-white text-center text-[11px] font-bold leading-tight text-stone-400 transition-colors hover:border-[#0052FF] hover:text-[#0052FF]"
+            >
+              {link.thumbnail ? (
+                <img src={link.thumbnail} alt={link.title} className="h-full w-full object-cover object-center" />
+              ) : (
+                <span>Add thumbnail</span>
+              )}
+            </label>
+            {link.thumbnail ? (
+              <button
+                type="button"
+                onClick={() => updateLink(link.id, 'thumbnail', '')}
+                className="absolute -right-1.5 -top-1.5 flex h-7 w-7 items-center justify-center rounded-full bg-stone-500/45 text-[11px] font-black text-white shadow-sm backdrop-blur transition-colors hover:bg-red-500"
+                aria-label="Remove thumbnail"
+                title="Remove thumbnail"
+              >
+                X
+              </button>
+            ) : null}
+          </div>
+          <input
+            id={thumbnailInputId}
+            type="file"
+            className="hidden"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (!file) return;
+              const reader = new FileReader();
+              reader.onload = () => updateLink(link.id, 'thumbnail', reader.result);
+              reader.readAsDataURL(file);
+              e.target.value = '';
+            }}
+          />
         </div>
 
-        <button onClick={() => removeLink(link.id)} className="absolute top-4 right-4 text-stone-400 hover:text-red-500 transition-colors p-1.5 bg-white rounded-lg border border-stone-200 opacity-0 md:group-hover:opacity-100 shadow-sm">
-          <Trash2 className="w-4 h-4" />
-        </button>
-        
-        <div>
-          <label className="block text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-1">Link Title</label>
-          <input type="text" value={link.title} onChange={e => updateLink(link.id, 'title', e.target.value)} className="w-full bg-transparent border-b-2 border-stone-200 focus:border-[#0052FF] focus:outline-none transition-colors font-bold text-stone-900 pb-1" />
-        </div>
-        <div>
-          <label className="block text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-1">Destination URL</label>
-          <input type="text" value={link.url} onChange={e => updateLink(link.id, 'url', e.target.value)} className="w-full bg-transparent border-b-2 border-stone-200 focus:border-[#0052FF] focus:outline-none transition-colors text-sm text-stone-600 font-medium pb-1" />
+        <div className="flex-1 flex flex-col gap-2 min-w-0">
+          <div className="absolute top-5 right-14">
+            <button
+              onClick={() => updateLink(link.id, 'isActive', !isActive)}
+              className={`w-10 h-6 rounded-full transition-colors flex items-center px-1 ${isActive ? 'bg-[#0052FF]' : 'bg-stone-300'}`}
+            >
+              <div className={`w-4 h-4 bg-white rounded-full transition-transform ${isActive ? 'translate-x-4' : 'translate-x-0'}`} />
+            </button>
+          </div>
+
+          <button onClick={() => removeLink(link.id)} className="absolute top-4 right-4 text-stone-400 hover:text-red-500 transition-colors p-1.5 bg-white rounded-lg border border-stone-200 opacity-0 md:group-hover:opacity-100 shadow-sm">
+            <Trash2 className="w-4 h-4" />
+          </button>
+
+          <div>
+            <label className="block text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-1">Link Title</label>
+            <input type="text" value={link.title} onChange={e => updateLink(link.id, 'title', e.target.value)} className="w-full bg-transparent border-b-2 border-stone-200 focus:border-[#0052FF] focus:outline-none transition-colors font-bold text-stone-900 pb-1" />
+          </div>
+          <div>
+            <label className="block text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-1">URL</label>
+            <input type="text" value={link.url} onChange={e => updateLink(link.id, 'url', e.target.value)} className="w-full bg-transparent border-b-2 border-stone-200 focus:border-[#0052FF] focus:outline-none transition-colors text-sm text-stone-600 font-medium pb-1" />
+          </div>
+          <div>
+            <label className="block text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-1">Subtitle</label>
+            <input
+              type="text"
+              value={link.subtitle || ''}
+              onChange={e => updateLink(link.id, 'subtitle', e.target.value)}
+              placeholder="Small helper text under the title"
+              className="w-full bg-transparent border-b-2 border-stone-200 focus:border-[#0052FF] focus:outline-none transition-colors text-sm text-stone-500 font-medium pb-1"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -63,6 +114,7 @@ function SortableLinkItem({ link, updateLink, removeLink }: { link: any, updateL
 function BuilderDashboard() {
   const searchParams = useSearchParams();
   const username = searchParams.get('username') || 'yourname';
+  const avatarInputRef = useRef<HTMLInputElement | null>(null);
 
   const [profile, setProfile] = useState({
     name: "Alex Jensen",
@@ -76,9 +128,30 @@ function BuilderDashboard() {
       { id: 3, type: "instagram", url: "#", isActive: true },
     ],
     links: [
-      { id: 1, title: "Book a Showing", url: "#", isActive: true },
-      { id: 2, title: "Get a Free Home Valuation", url: "#", isActive: true },
-      { id: 3, title: "Download Buyer's Guide", url: "#", isActive: true },
+      {
+        id: 1,
+        title: "Book a Showing",
+        subtitle: "Tap in to schedule a private tour",
+        url: "#",
+        thumbnail: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=300&q=80",
+        isActive: true
+      },
+      {
+        id: 2,
+        title: "Get a Free Home Valuation",
+        subtitle: "See what your home could sell for this week",
+        url: "#",
+        thumbnail: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=300&q=80",
+        isActive: true
+      },
+      {
+        id: 3,
+        title: "Download Buyer's Guide",
+        subtitle: "My closing checklist and financing tips",
+        url: "#",
+        thumbnail: "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=300&q=80",
+        isActive: true
+      },
     ],
     listings: [
       {
@@ -99,8 +172,7 @@ function BuilderDashboard() {
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
-        // Require dragging 5px before drag event triggers so it doesn't conflict with clicking inputs
-        activationConstraint: { distance: 5 }, 
+      activationConstraint: { distance: 5 },
     }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
@@ -111,8 +183,8 @@ function BuilderDashboard() {
     const { active, over } = event;
     if (over && active.id !== over.id) {
       setProfile((prev) => {
-        const oldIndex = prev.links.findIndex(l => l.id === active.id);
-        const newIndex = prev.links.findIndex(l => l.id === over.id);
+        const oldIndex = prev.links.findIndex((l: any) => l.id === active.id);
+        const newIndex = prev.links.findIndex((l: any) => l.id === over.id);
         const newLinks = [...prev.links];
         const [moved] = newLinks.splice(oldIndex, 1);
         newLinks.splice(newIndex, 0, moved);
@@ -128,19 +200,19 @@ function BuilderDashboard() {
   const addLink = () => {
     setProfile({
       ...profile,
-      links: [...profile.links, { id: Date.now(), title: "New Custom Link", url: "https://", isActive: true }]
+      links: [...profile.links, { id: Date.now(), title: "New Custom Link", subtitle: "Add a short teaser", url: "https://", thumbnail: "", isActive: true }]
     });
   };
 
   const updateLink = (id: number, field: string, value: any) => {
     setProfile({
       ...profile,
-      links: profile.links.map(l => l.id === id ? { ...l, [field]: value } : l)
+      links: profile.links.map((l: any) => l.id === id ? { ...l, [field]: value } : l)
     });
   };
 
   const removeLink = (id: number) => {
-    setProfile({ ...profile, links: profile.links.filter(l => l.id !== id) });
+    setProfile({ ...profile, links: profile.links.filter((l: any) => l.id !== id) });
   };
 
   const addSocial = () => {
@@ -153,30 +225,38 @@ function BuilderDashboard() {
   const updateSocial = (id: number, field: string, value: any) => {
     setProfile({
       ...profile,
-      socials: profile.socials.map(s => s.id === id ? { ...s, [field]: value } : s)
+      socials: profile.socials.map((s: any) => s.id === id ? { ...s, [field]: value } : s)
     });
   };
 
   const removeSocial = (id: number) => {
-    setProfile({ ...profile, socials: profile.socials.filter(s => s.id !== id) });
+    setProfile({ ...profile, socials: profile.socials.filter((s: any) => s.id !== id) });
+  };
+
+  const handleAvatarUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      setProfile((prev) => ({ ...prev, avatar: reader.result as string }));
+    };
+    reader.readAsDataURL(file);
+    e.target.value = '';
   };
 
   return (
     <div className="fixed inset-0 bg-stone-50 flex flex-col md:flex-row overflow-hidden font-sans">
-      
-      {/* LEFT COLUMN - CONTROLS */}
       <div className="w-full md:w-1/2 lg:w-[60%] h-full overflow-y-auto bg-stone-50 md:bg-white border-r border-stone-200 relative z-10">
         <div className="max-w-3xl mx-auto px-6 py-12">
-          
           <div className="mb-12 flex items-center justify-between">
             <div className="flex items-center gap-3">
-               <div className="w-12 h-12 bg-[#0052FF] rounded-2xl flex items-center justify-center text-white shadow-xl shadow-blue-900/10 hover:scale-105 transition-transform">
-                  <Link2 className="w-6 h-6 stroke-[2.5]" />
-               </div>
-               <div>
-                 <h1 className="text-2xl font-black tracking-tight text-stone-900">Dashboard</h1>
-                 <p className="text-stone-500 font-medium text-sm">Customize your agentlink.com/{username}</p>
-               </div>
+              <div className="w-12 h-12 bg-[#0052FF] rounded-2xl flex items-center justify-center text-white shadow-xl shadow-blue-900/10 hover:scale-105 transition-transform">
+                <Link2 className="w-6 h-6 stroke-[2.5]" />
+              </div>
+              <div>
+                <h1 className="text-2xl font-black tracking-tight text-stone-900">Dashboard</h1>
+                <p className="text-stone-500 font-medium text-sm">Customize your agentlink.com/{username}</p>
+              </div>
             </div>
             <button className="bg-[#0052FF] text-white px-6 py-2.5 rounded-full font-bold shadow-md hover:bg-blue-700 transition-colors hidden sm:block">
               Save
@@ -207,7 +287,6 @@ function BuilderDashboard() {
             </div>
           </section>
 
-          {/* Links Section using DndKit */}
           <section className="mb-8 bg-white p-6 sm:p-8 rounded-[2rem] border border-stone-200 shadow-sm">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
               <h2 className="text-lg font-black text-stone-900">Action Links</h2>
@@ -215,11 +294,11 @@ function BuilderDashboard() {
                 <Plus className="w-4 h-4 stroke-[3]" /> Add Link
               </button>
             </div>
-            
+
             <div className="flex flex-col gap-4 relative">
               <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEndLink}>
-                <SortableContext items={profile.links.map(l => l.id)} strategy={verticalListSortingStrategy}>
-                  {profile.links.map(link => (
+                <SortableContext items={profile.links.map((l: any) => l.id)} strategy={verticalListSortingStrategy}>
+                  {profile.links.map((link: any) => (
                     <SortableLinkItem key={link.id} link={link} updateLink={updateLink} removeLink={removeLink} />
                   ))}
                 </SortableContext>
@@ -228,7 +307,6 @@ function BuilderDashboard() {
             </div>
           </section>
 
-          {/* Socials Section */}
           <section className="bg-white p-6 sm:p-8 rounded-[2rem] border border-stone-200 shadow-sm mb-20">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-lg font-black text-stone-900">Social Accounts</h2>
@@ -236,11 +314,10 @@ function BuilderDashboard() {
                 <Plus className="w-4 h-4 stroke-[3]" /> Add Social
               </button>
             </div>
-            
+
             <div className="flex flex-col gap-4">
-              {profile.socials.map(social => (
+              {profile.socials.map((social: any) => (
                 <div key={social.id} className={`bg-stone-50 p-4 rounded-2xl border border-stone-200 flex flex-col sm:flex-row items-center justify-between gap-4 transition-opacity duration-300 relative ${social.isActive === false ? 'opacity-50 saturate-50' : ''}`}>
-                  
                   <div className="w-full flex-1 flex gap-3 pr-16 sm:pr-0">
                     <select value={social.type} onChange={e => updateSocial(social.id, 'type', e.target.value)} className="bg-white border border-stone-200 rounded-xl px-2 py-2.5 text-sm font-bold text-stone-700 outline-none focus:border-[#0052FF]">
                       <option value="email">Email</option>
@@ -254,45 +331,48 @@ function BuilderDashboard() {
                   </div>
 
                   <div className="flex items-center gap-3 w-full sm:w-auto justify-end absolute top-4 right-4 sm:relative sm:top-0 sm:right-0">
-                     {/* Toggle Switch */}
-                     <button 
-                        onClick={() => updateSocial(social.id, 'isActive', social.isActive === false ? true : false)}
-                        className={`w-10 h-6 rounded-full transition-colors flex items-center px-1 ${social.isActive !== false ? 'bg-[#0052FF]' : 'bg-stone-300'}`}
-                      >
-                       <div className={`w-4 h-4 bg-white rounded-full transition-transform ${social.isActive !== false ? 'translate-x-4' : 'translate-x-0'}`} />
-                     </button>
-                     <button title="Delete Social" onClick={() => removeSocial(social.id)} className="p-2.5 bg-white text-stone-400 border border-stone-200 rounded-xl hover:text-red-500 hover:border-red-200 transition-colors flex-none">
-                       <Trash2 className="w-4 h-4" />
-                     </button>
+                    <button
+                      onClick={() => updateSocial(social.id, 'isActive', social.isActive === false ? true : false)}
+                      className={`w-10 h-6 rounded-full transition-colors flex items-center px-1 ${social.isActive !== false ? 'bg-[#0052FF]' : 'bg-stone-300'}`}
+                    >
+                      <div className={`w-4 h-4 bg-white rounded-full transition-transform ${social.isActive !== false ? 'translate-x-4' : 'translate-x-0'}`} />
+                    </button>
+                    <button title="Delete Social" onClick={() => removeSocial(social.id)} className="p-2.5 bg-white text-stone-400 border border-stone-200 rounded-xl hover:text-red-500 hover:border-red-200 transition-colors flex-none">
+                      <Trash2 className="w-4 h-4" />
+                    </button>
                   </div>
                 </div>
               ))}
               {profile.socials.length === 0 && <p className="text-center text-stone-400 font-medium py-10 border-2 border-dashed border-stone-200 rounded-2xl">No socials mapped.</p>}
             </div>
           </section>
-
         </div>
       </div>
 
-      {/* RIGHT COLUMN - PREVIEW */}
       <div className="hidden md:flex w-1/2 lg:w-[40%] h-full bg-stone-100 border-l border-stone-200 items-center justify-center relative p-8 shadow-[inset_10px_0_20px_-10px_rgba(0,0,0,0.05)] z-0">
         <div className="absolute top-6 left-1/2 -translate-x-1/2 flex items-center gap-2 px-6 py-2.5 bg-white rounded-full shadow-sm border border-stone-200 font-bold text-sm text-stone-700">
-           <MonitorSmartphone className="w-4 h-4 text-[#0052FF]" /> Live Link Preview
+          <MonitorSmartphone className="w-4 h-4 text-[#0052FF]" /> Live Link Preview
         </div>
         <div className="relative w-[360px] h-[760px] bg-[#0A0B0D] rounded-[3.5rem] p-3 shadow-2xl border border-stone-300 transform scale-95 origin-center">
           <div className="absolute top-0 inset-x-0 h-10 bg-transparent z-20 flex justify-center pt-4 pointer-events-none">
             <div className="w-[110px] h-[30px] bg-black rounded-full flex items-center justify-end px-3 shadow-[inset_0_0_2px_rgba(255,255,255,0.1)]">
-               <div className="w-2 h-2 rounded-full bg-[#0A0B0D] shadow-inner"></div>
-            </div> 
+              <div className="w-2 h-2 rounded-full bg-[#0A0B0D] shadow-inner"></div>
+            </div>
           </div>
           <div className="w-full h-full bg-stone-50 rounded-[2.75rem] overflow-hidden relative shadow-inner pt-10">
             <div className="w-full h-[calc(100%+2rem)] -mt-4 bg-stone-50 pb-10">
-               <ProfilePreview profile={profile} />
+              <ProfilePreview profile={{ ...profile, onAvatarClick: () => avatarInputRef.current?.click() }} />
             </div>
           </div>
         </div>
       </div>
-
+      <input
+        ref={avatarInputRef}
+        type="file"
+        className="hidden"
+        accept="image/*"
+        onChange={handleAvatarUpload}
+      />
     </div>
   );
 }
@@ -302,5 +382,5 @@ export default function Page() {
     <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-stone-400 font-semibold bg-stone-50">Loading Builder Interface...</div>}>
       <BuilderDashboard />
     </Suspense>
-  )
+  );
 }

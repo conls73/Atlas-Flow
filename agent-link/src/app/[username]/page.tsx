@@ -2,7 +2,7 @@
 "use client";
 
 import React from 'react';
-import { Mail, Phone, Camera, Key, ArrowRight, ExternalLink } from 'lucide-react';
+import { Mail, Phone, Camera, ArrowRight, ExternalLink } from 'lucide-react';
 import { ProfilePreview } from '../../components/ProfilePreview';
 
 interface ProfileProps {
@@ -25,9 +25,30 @@ function getAgentData(username: string) {
       { id: 3, type: "instagram", url: "#", icon: <Camera className="w-5 h-5" /> },
     ],
     links: [
-      { id: 1, title: "Book a Showing", url: "#", icon: <Key className="w-4 h-4" /> },
-      { id: 2, title: "Get a Free Home Valuation", url: "#", icon: <ArrowRight className="w-4 h-4" /> },
-      { id: 3, title: "Download Buyer's Guide", url: "#", icon: <ExternalLink className="w-4 h-4" /> },
+      {
+        id: 1,
+        title: "Book a Showing",
+        subtitle: "Tap in to schedule a private tour",
+        url: "#",
+        icon: <ArrowRight className="w-4 h-4" />,
+        thumbnail: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=300&q=80"
+      },
+      {
+        id: 2,
+        title: "Get a Free Home Valuation",
+        subtitle: "See what your home could sell for this week",
+        url: "#",
+        icon: <ArrowRight className="w-4 h-4" />,
+        thumbnail: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=300&q=80"
+      },
+      {
+        id: 3,
+        title: "Download Buyer's Guide",
+        subtitle: "My closing checklist and financing tips",
+        url: "#",
+        icon: <ExternalLink className="w-4 h-4" />,
+        thumbnail: "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=300&q=80"
+      },
     ],
     listings: [
       {
