@@ -91,7 +91,7 @@ export default function Home() {
 
       {/* Footer Link */}
       <div className="w-full text-center pb-8 z-10 animate-in fade-in duration-1000 delay-500">
-        <a href="https://flowatlas.com" className="text-blue-300 hover:text-white text-sm font-semibold transition-colors">
+        <a href="https://conls73.github.io/Atlas-Flow/" className="text-blue-300 hover:text-white text-sm font-semibold transition-colors">
           &larr; Back to Atlas Flow
         </a>
       </div>
