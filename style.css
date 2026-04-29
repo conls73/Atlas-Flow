@@ -185,10 +185,15 @@ main {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
+    min-height: calc(100vh - 120px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 100px;
 }
 
 .section {
-    padding: 6rem 0;
+    padding: 2rem 0;
 }
 
 .section-header {
@@ -212,13 +217,11 @@ main {
 
 /* Hero Section */
 .hero {
-    height: 100vh;
-    min-height: 800px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding-top: 5rem;
+    margin-bottom: 2rem;
 }
 
 .hero-content {
@@ -372,10 +375,10 @@ main {
 /* Footer */
 .footer {
     border-top: 1px solid var(--glass-border);
-    padding: 4rem 2rem;
+    padding: 3rem 2rem;
     text-align: center;
     background: rgba(0, 0, 0, 0.3);
-    margin-top: 4rem;
+    margin-top: 2rem;
 }
 
 .footer-content {
