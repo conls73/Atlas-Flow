@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atlas Flow | Premium Website & App Design Agency</title>
-    <meta name="description" content="Atlas Flow is a premium design agency specializing in stunning websites, mobile apps, and custom web applications.">
+    <title>Customer Projects | Atlas Flow</title>
+    <meta name="description" content="Explore our portfolio of successful customer projects.">
     
     <!-- Premium Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,6 +12,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="style.css">
+    <style>
+        .project-card {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+        .project-image-placeholder {
+            width: 100%;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            border: 1px dashed var(--glass-border);
+        }
+    </style>
 </head>
 <body>
 
@@ -26,8 +45,8 @@
                 <span class="logo-text">ATLAS FLOW</span>
             </a>
             <div class="nav-links">
-                <a href="index.html" style="color: var(--green-primary);">Home</a>
-                <a href="customer-projects.html">Customer Projects</a>
+                <a href="index.html">Home</a>
+                <a href="customer-projects.html" style="color: var(--green-primary);">Customer Projects</a>
                 <a href="personal-projects.html">Personal Projects</a>
                 <a href="apps-to-buy.html">Apps to Buy</a>
                 <button class="btn-primary btn-small join-waitlist-btn">Start a Project</button>
@@ -36,37 +55,22 @@
     </nav>
 
     <main>
-        <!-- Hero Section -->
-        <section class="hero reveal">
-            <div class="hero-content">
-                <div class="badge">🚀 Premium Digital Experiences</div>
-                <h1 class="hero-title">We Craft <span class="text-gradient">Websites</span><br>& Seamless <span class="text-gradient">Apps</span>.</h1>
-                <p class="hero-subtitle">Atlas Flow is a high-end design and development agency. We build stunning digital products that captivate users and scale businesses.</p>
-                <div class="hero-cta" style="margin-top: 2rem;">
-                    <a href="customer-projects.html" class="btn-primary">View Our Work</a>
-                    <a href="apps-to-buy.html" class="btn-secondary">Browse Apps</a>
-                </div>
+        <section class="section reveal" style="padding-top: 4rem;">
+            <div class="section-header">
+                <div class="badge">Portfolio</div>
+                <h2 class="section-title">Customer <span class="text-gradient">Projects</span></h2>
+                <p class="section-desc">Take a look at some of the incredible platforms, websites, and apps we've built for our clients.</p>
             </div>
-        </section>
-
-        <!-- Services Section -->
-        <section class="section reveal" style="transition-delay: 200ms;">
-            <div class="grid services-grid" style="margin-top: 3rem;">
-                <div class="card glass text-center">
-                    <div class="card-icon">💻</div>
-                    <h3 class="card-title">Custom Websites</h3>
-                    <p class="card-text">Beautiful, high-converting landing pages and websites designed to impress.</p>
-                </div>
-                <div class="card glass text-center">
-                    <div class="card-icon">📱</div>
-                    <h3 class="card-title">Mobile Apps</h3>
-                    <p class="card-text">Sleek, native-feeling mobile applications for iOS and Android.</p>
-                </div>
-                <div class="card glass text-center">
-                    <div class="card-icon">⚡</div>
-                    <h3 class="card-title">Web Applications</h3>
-                    <p class="card-text">Powerful, interactive web apps and SaaS platforms built for scale.</p>
-                </div>
+            
+            <div class="grid services-grid">
+                <!-- Placeholder Project 1 -->
+                <a href="#" class="card glass project-card reveal">
+                    <div class="project-image-placeholder">
+                        <span>Image Placeholder</span>
+                    </div>
+                    <h3 class="card-title">Project Name</h3>
+                    <p class="card-text">A brief description of the project and the impact it had on the client's business.</p>
+                </a>
             </div>
         </section>
     </main>
